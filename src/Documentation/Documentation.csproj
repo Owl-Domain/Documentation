@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Project -->
+	<PropertyGroup Label="project">
+		<TargetFrameworks>netstandard2.1</TargetFrameworks>
+		<LangVersion>13</LangVersion>
+		<Nullable>enable</Nullable>
+
+		<AssemblyName>OwlDomain.Documentation</AssemblyName>
+		<RootNamespace>OwlDomain.Documentation</RootNamespace>
+
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Deterministic>true</Deterministic>
+	</PropertyGroup>
+
+	<!-- Project references -->
+	<ItemGroup Label="projects">
+		<ProjectReference Include="../Documentation.Abstractions/Documentation.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

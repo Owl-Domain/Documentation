@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{C841F5C2-8
 		..\playground_fix.sh = ..\playground_fix.sh
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation.Abstractions", "Documentation.Abstractions\Documentation.Abstractions.csproj", "{41297259-B2B1-436C-B080-21F8EDEBF5C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentation\Documentation.csproj", "{B2F370D8-FCB3-4B54-86D6-8B3495C258A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{29EDB329-E9EB-448B-B757-6B49B0AAD6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29EDB329-E9EB-448B-B757-6B49B0AAD6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29EDB329-E9EB-448B-B757-6B49B0AAD6A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41297259-B2B1-436C-B080-21F8EDEBF5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41297259-B2B1-436C-B080-21F8EDEBF5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41297259-B2B1-436C-B080-21F8EDEBF5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41297259-B2B1-436C-B080-21F8EDEBF5C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F370D8-FCB3-4B54-86D6-8B3495C258A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F370D8-FCB3-4B54-86D6-8B3495C258A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F370D8-FCB3-4B54-86D6-8B3495C258A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F370D8-FCB3-4B54-86D6-8B3495C258A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
