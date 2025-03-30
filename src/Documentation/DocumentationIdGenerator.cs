@@ -60,27 +60,33 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	}
 
 	/// <inheritdoc/>
-	public string Get(MethodBase method)
+	public string Get(MethodBase methodBase)
 	{
 		StringBuilder builder = new("M:");
-		AppendType(builder, method.DeclaringType);
+		AppendType(builder, methodBase.DeclaringType);
 
 		builder.Append('.');
-		AppendName(builder, method.Name);
+		AppendName(builder, methodBase.Name);
 
-		if (method.IsGenericMethod)
+		if (methodBase.IsGenericMethod)
 		{
-			Type[] genericArguments = method.GetGenericArguments();
+			Type[] genericArguments = methodBase.GetGenericArguments();
 
 			builder
 			.Append("``")
 			.Append(genericArguments.Length);
 		}
 
-		ParameterInfo[] parameters = method.GetParameters();
+		ParameterInfo[] parameters = methodBase.GetParameters();
 
 		if (parameters.Length > 0)
 			AppendParameters(builder, parameters);
+
+		if (methodBase.IsSpecialName && methodBase.Name is "op_Implicit" or "op_Explicit" && methodBase is MethodInfo method)
+		{
+			builder.Append('~');
+			AppendType(builder, method.ReturnType);
+		}
 
 		return builder.ToString();
 	}

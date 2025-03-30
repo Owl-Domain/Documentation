@@ -233,6 +233,28 @@ public sealed class DocumentationIdGeneratorTests
 		// Assert
 		Assert.That.AreEqual(result, expected);
 	}
+
+	[DataRow("op_Implicit", typeof(SimpleTestType), typeof(int), "(OwlDomain.Documentation.Tests.SimpleTestType)~System.Int32")]
+	[DataRow("op_Explicit", typeof(SimpleTestType), typeof(byte), "(OwlDomain.Documentation.Tests.SimpleTestType)~System.Byte")]
+	[TestMethod]
+	public void Get_WithConversionOperator_ReturnsExpectedId(string name, Type from, Type to, string expected)
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		MethodInfo? conversion = GetConversion(type, name, from, to);
+		expected = $"M:{type.FullName}.{name}{expected}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(conversion);
+
+		// Act
+		string result = sut.Get(conversion);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
 	#endregion
 
 	#region Get(ConstructorInfo) tests
@@ -347,6 +369,22 @@ public sealed class DocumentationIdGeneratorTests
 
 		// Assert
 		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
+	#region Helpers
+	private static MethodInfo? GetConversion(Type type, string name, Type from, Type to)
+	{
+		MethodInfo[] methods = type.GetMethods();
+
+		MethodInfo? method = methods
+			.Where(method => method.Name == name)
+			.Where(method => method.IsSpecialName)
+			.Where(method => method.ReturnType == to)
+			.Where(method => method.GetParameters().SingleOrDefault()?.ParameterType == from)
+			.SingleOrDefault();
+
+		return method;
 	}
 	#endregion
 }

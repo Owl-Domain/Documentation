@@ -76,6 +76,15 @@ public sealed class SimpleTestType
 	public void MethodWith2dArray(int[,] _) { }
 	#endregion
 #pragma warning restore CA1822
+
+
+	#region Operators
+	/// <summary></summary>
+	public static implicit operator int(SimpleTestType _) => 1;
+
+	/// <summary></summary>
+	public static explicit operator byte(SimpleTestType _) => 1;
+	#endregion
 }
 
 /// <summary></summary>
