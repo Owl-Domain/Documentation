@@ -3,7 +3,7 @@ namespace OwlDomain.Documentation.Tests;
 [TestClass]
 public sealed class DocumentationIdGeneratorTests
 {
-	#region Get (for type) tests
+	#region Get(Type) tests
 	[TestMethod]
 	public void Get_WithSimpleClassType_ReturnsExpectedId()
 	{
@@ -51,6 +51,112 @@ public sealed class DocumentationIdGeneratorTests
 
 		// Act
 		string result = sut.Get(type);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
+	#region Get(FieldInfo) tests
+	[TestMethod]
+	public void Get_WithField_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		FieldInfo? field = type.GetField(nameof(SimpleTestType.SomeField));
+		string expected = $"F:{type.FullName}.{field?.Name}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(field);
+
+		// Act
+		string result = sut.Get(field);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
+	[TestMethod]
+	public void Get_WithConstant_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		FieldInfo? constant = type.GetField(nameof(SimpleTestType.SomeConstant));
+		string expected = $"F:{type.FullName}.{constant?.Name}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(constant);
+
+		// Act
+		string result = sut.Get(constant);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
+	#region Get(PropertyInfo) tests
+	[TestMethod]
+	public void Get_WithProperty_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		PropertyInfo? property = type.GetProperty(nameof(SimpleTestType.SomeProperty));
+		string expected = $"P:{type.FullName}.{property?.Name}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(property);
+
+		// Act
+		string result = sut.Get(property);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
+	[TestMethod]
+	public void Get_WithIndexer_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		PropertyInfo? indexer = type.GetProperties().Single(p => p.GetIndexParameters().Length > 0);
+		string expected = $"P:{type.FullName}.Item(System.Int32)";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(indexer);
+
+		// Act
+		string result = sut.Get(indexer);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
+	#region Get(EventInfo) tests
+	[TestMethod]
+	public void Get_WithEvent_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		EventInfo? @event = type.GetEvent(nameof(SimpleTestType.SomeEvent));
+		string expected = $"E:{type.FullName}.{@event?.Name}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(@event);
+
+		// Act
+		string result = sut.Get(@event);
 
 		// Assert
 		Assert.That.AreEqual(result, expected);

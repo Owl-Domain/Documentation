@@ -18,13 +18,33 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	/// <inheritdoc/>
 	public string Get(FieldInfo field)
 	{
-		throw new NotImplementedException();
+		StringBuilder builder = new("F:");
+		AppendType(builder, field.DeclaringType);
+
+		builder
+			.Append('.')
+			.Append(field.Name);
+
+		return builder.ToString();
 	}
 
 	/// <inheritdoc/>
 	public string Get(PropertyInfo property)
 	{
-		throw new NotImplementedException();
+		StringBuilder builder = new("P:");
+		AppendType(builder, property.DeclaringType);
+
+		builder
+			.Append('.')
+			.Append(property.Name);
+
+		// Note(Nightowl): Check for indexer;
+		ParameterInfo[] parameters = property.GetIndexParameters();
+
+		if (parameters.Length > 0)
+			AppendParameters(builder, parameters);
+
+		return builder.ToString();
 	}
 
 	/// <inheritdoc/>
@@ -36,7 +56,14 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	/// <inheritdoc/>
 	public string Get(EventInfo @event)
 	{
-		throw new NotImplementedException();
+		StringBuilder builder = new("E:");
+		AppendType(builder, @event.DeclaringType);
+
+		builder
+			.Append('.')
+			.Append(@event.Name);
+
+		return builder.ToString();
 	}
 
 	/// <inheritdoc/>
@@ -72,6 +99,27 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		}
 
 		builder.Append(type.Name);
+	}
+	private void AppendParameter(StringBuilder builder, ParameterInfo parameter)
+	{
+		AppendType(builder, parameter.ParameterType);
+	}
+	private void AppendParameters(StringBuilder builder, IEnumerable<ParameterInfo> parameters)
+	{
+		builder.Append('(');
+
+		bool hadFirst = false;
+		foreach (ParameterInfo parameter in parameters)
+		{
+			if (hadFirst)
+				builder.Append(',');
+			else
+				hadFirst = true;
+
+			AppendParameter(builder, parameter);
+		}
+
+		builder.Append(')');
 	}
 	#endregion
 }
