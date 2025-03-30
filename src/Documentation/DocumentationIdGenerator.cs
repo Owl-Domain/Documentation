@@ -21,9 +21,8 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		StringBuilder builder = new("F:");
 		AppendType(builder, field.DeclaringType);
 
-		builder
-			.Append('.')
-			.Append(field.Name);
+		builder.Append('.');
+		AppendName(builder, field.Name);
 
 		return builder.ToString();
 	}
@@ -34,9 +33,8 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		StringBuilder builder = new("P:");
 		AppendType(builder, property.DeclaringType);
 
-		builder
-			.Append('.')
-			.Append(property.Name);
+		builder.Append('.');
+		AppendName(builder, property.Name);
 
 		// Note(Nightowl): Check for indexer;
 		ParameterInfo[] parameters = property.GetIndexParameters();
@@ -50,7 +48,35 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	/// <inheritdoc/>
 	public string Get(MethodInfo method)
 	{
-		throw new NotImplementedException();
+		StringBuilder builder = new("M:");
+		AppendType(builder, method.DeclaringType);
+
+		builder.Append('.');
+		AppendName(builder, method.Name);
+
+		ParameterInfo[] parameters = method.GetParameters();
+
+		if (parameters.Length > 0)
+			AppendParameters(builder, parameters);
+
+		return builder.ToString();
+	}
+
+	/// <inheritdoc/>
+	public string Get(ConstructorInfo constructor)
+	{
+		StringBuilder builder = new("M:");
+		AppendType(builder, constructor.DeclaringType);
+
+		builder.Append('.');
+		AppendName(builder, constructor.Name);
+
+		ParameterInfo[] parameters = constructor.GetParameters();
+
+		if (parameters.Length > 0)
+			AppendParameters(builder, parameters);
+
+		return builder.ToString();
 	}
 
 	/// <inheritdoc/>
@@ -59,9 +85,8 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		StringBuilder builder = new("E:");
 		AppendType(builder, @event.DeclaringType);
 
-		builder
-			.Append('.')
-			.Append(@event.Name);
+		builder.Append('.');
+		AppendName(builder, @event.Name);
 
 		return builder.ToString();
 	}
@@ -98,7 +123,7 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 			builder.Append('.');
 		}
 
-		builder.Append(type.Name);
+		AppendName(builder, type.Name);
 	}
 	private void AppendParameter(StringBuilder builder, ParameterInfo parameter)
 	{
@@ -120,6 +145,17 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		}
 
 		builder.Append(')');
+	}
+	private void AppendName(StringBuilder builder, string name)
+	{
+		if (name.Contains('.') is false)
+		{
+			builder.Append(name);
+			return;
+		}
+
+		foreach (char ch in name)
+			builder.Append(ch is '.' ? '#' : ch);
 	}
 	#endregion
 }

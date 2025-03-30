@@ -9,6 +9,8 @@
 		<AssemblyName>OwlDomain.Documentation.Tests</AssemblyName>
 		<RootNamespace>OwlDomain.Documentation.Tests</RootNamespace>
 
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>CS1591</NoWarn>
     <UseVSTest>true</UseVSTest>
   </PropertyGroup>
 

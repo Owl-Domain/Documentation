@@ -163,6 +163,68 @@ public sealed class DocumentationIdGeneratorTests
 	}
 	#endregion
 
+	#region Get(ConstructorInfo) tests
+	[TestMethod]
+	public void Get_WithParameterlessConstructor_ReturnsExpectedId()
+	{
+		// Type
+		Type type = typeof(SimpleTestType);
+		ConstructorInfo? constructor = type.GetConstructor([]);
+		string expected = $"M:{type.FullName}.#ctor";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(constructor);
+
+		// Act
+		string result = sut.Get(constructor);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
+	[TestMethod]
+	public void Get_WithStaticConstructor_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		ConstructorInfo? constructor = type.GetConstructor(BindingFlags.Static | BindingFlags.NonPublic, []);
+		string expected = $"M:{type.FullName}.#cctor";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(constructor);
+
+		// Act
+		string result = sut.Get(constructor);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
+	[TestMethod]
+	public void Get_WithConstructor_ReturnsExpectedId()
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		ConstructorInfo? constructor = type.GetConstructor([typeof(int)]);
+		string expected = $"M:{type.FullName}.#ctor(System.Int32)";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(constructor);
+
+		// Act
+		string result = sut.Get(constructor);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
 	#region GetForNamespace tests
 	[DataRow("Simple", "N:Simple")]
 	[DataRow("Nested.Namespace", "N:Nested.Namespace")]
