@@ -24,6 +24,11 @@ public interface IDocumentationIdGenerator
 	/// <summary>Gets a documentation comment id for the given <paramref name="method"/>.</summary>
 	/// <param name="method">The method to get the documentation comment id for.</param>
 	/// <returns>The documentation comment id for the given <paramref name="method"/>.</returns>
+	string Get(MethodBase method);
+
+	/// <summary>Gets a documentation comment id for the given <paramref name="method"/>.</summary>
+	/// <param name="method">The method to get the documentation comment id for.</param>
+	/// <returns>The documentation comment id for the given <paramref name="method"/>.</returns>
 	string Get(MethodInfo method);
 
 	/// <summary>Gets a documentation comment id for the given <paramref name="constructor"/>.</summary>

@@ -20,6 +20,23 @@ public sealed class DocumentationIdGeneratorTests
 		Assert.That.AreEqual(result, expected);
 	}
 
+	[DataRow(typeof(GenericTestType<>), "GenericTestType`1")]
+	[DataRow(typeof(GenericTestType<,>), "GenericTestType`2")]
+	[TestMethod]
+	public void Get_WithGenericClassType_ReturnsExpectedId(Type type, string expected)
+	{
+		// Arrange
+		expected = $"T:{type.Namespace}.{expected}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Act
+		string result = sut.Get(type);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
 	[TestMethod]
 	public void Get_WithNestedClassType_ReturnsExpectedId()
 	{
@@ -170,12 +187,35 @@ public sealed class DocumentationIdGeneratorTests
 	[DataRow(nameof(SimpleTestType.MethodWithParameter), "MethodWithParameter(System.Int32)")]
 	[DataRow(nameof(SimpleTestType.MethodWithPointer), "MethodWithPointer(System.Int32*)")]
 	[DataRow(nameof(SimpleTestType.ParameterlessMethod), "ParameterlessMethod")]
+	[DataRow(nameof(SimpleTestType.MethodWithGenericParameter), "MethodWithGenericParameter(System.Collections.Generic.List{System.Int32})")]
 	[TestMethod]
 	public void Get_WithMethod_ReturnsExpectedId(string methodName, string expected)
 	{
 		// Arrange
 		Type type = typeof(SimpleTestType);
 		MethodInfo? method = type.GetMethod(methodName);
+		expected = $"M:{type.FullName}.{expected}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(method);
+
+		// Act
+		string result = sut.Get(method);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+
+	[DataRow(1, "GenericMethod``1")]
+	[DataRow(2, "GenericMethod``2")]
+	[TestMethod]
+	public void Get_WithGenericMethod_ReturnsExpectedId(int genericArgumentCount, string expected)
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		MethodInfo? method = type.GetMethod(nameof(SimpleTestType.GenericMethod), genericArgumentCount, []);
 		expected = $"M:{type.FullName}.{expected}";
 
 		DocumentationIdGenerator sut = new();

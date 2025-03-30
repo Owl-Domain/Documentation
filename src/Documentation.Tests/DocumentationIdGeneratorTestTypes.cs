@@ -46,7 +46,7 @@ public sealed class SimpleTestType
 	public void OutMethod(out int value) => value = 1;
 
 	/// <summary></summary>
-	public void InMethod(in int Get_WithConstructor_ReturnsExpectedId) { }
+	public void InMethod(in int _) { }
 
 	/// <summary></summary>
 	public void RefMethod(ref int _) { }
@@ -59,6 +59,21 @@ public sealed class SimpleTestType
 
 	/// <summary></summary>
 	public void ParameterlessMethod() { }
+
+	/// <summary></summary>
+	public void GenericMethod<T>() { }
+
+	/// <summary></summary>
+	public void GenericMethod<T1, T2>() { }
+
+	/// <summary></summary>
+	public void MethodWithGenericParameter(List<int> _) { }
 	#endregion
 #pragma warning restore CA1822
 }
+
+/// <summary></summary>
+public sealed class GenericTestType<T> { }
+
+/// <summary></summary>
+public sealed class GenericTestType<T1, T2> { }

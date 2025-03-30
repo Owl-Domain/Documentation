@@ -46,13 +46,22 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	}
 
 	/// <inheritdoc/>
-	public string Get(MethodInfo method)
+	public string Get(MethodBase method)
 	{
 		StringBuilder builder = new("M:");
 		AppendType(builder, method.DeclaringType);
 
 		builder.Append('.');
 		AppendName(builder, method.Name);
+
+		if (method.IsGenericMethod)
+		{
+			Type[] genericArguments = method.GetGenericArguments();
+
+			builder
+			.Append("``")
+			.Append(genericArguments.Length);
+		}
 
 		ParameterInfo[] parameters = method.GetParameters();
 
@@ -63,21 +72,10 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	}
 
 	/// <inheritdoc/>
-	public string Get(ConstructorInfo constructor)
-	{
-		StringBuilder builder = new("M:");
-		AppendType(builder, constructor.DeclaringType);
+	public string Get(MethodInfo method) => Get(method as MethodBase);
 
-		builder.Append('.');
-		AppendName(builder, constructor.Name);
-
-		ParameterInfo[] parameters = constructor.GetParameters();
-
-		if (parameters.Length > 0)
-			AppendParameters(builder, parameters);
-
-		return builder.ToString();
-	}
+	/// <inheritdoc/>
+	public string Get(ConstructorInfo constructor) => Get(constructor as MethodBase);
 
 	/// <inheritdoc/>
 	public string Get(EventInfo @event)
@@ -112,6 +110,9 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	#region Helpers
 	private void AppendType(StringBuilder builder, Type type)
 	{
+		if (TryAppendConstructedGeneric(builder, type))
+			return;
+
 		if (TryAppendSpecialType(builder, type))
 			return;
 
@@ -127,6 +128,29 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		}
 
 		AppendName(builder, type.Name);
+	}
+	private bool TryAppendConstructedGeneric(StringBuilder builder, Type type)
+	{
+		if (type.IsConstructedGenericType is false)
+			return false;
+
+		if (type.DeclaringType is not null)
+		{
+			AppendType(builder, type.DeclaringType);
+			builder.Append('.');
+		}
+		else if (type.Namespace is not null)
+		{
+			builder.Append(type.Namespace);
+			builder.Append('.');
+		}
+
+		AppendName(builder, type.Name.AsSpan(0, type.Name.Length - 2));
+
+		Type[] arguments = type.GetGenericArguments();
+		AppendGenericArguments(builder, arguments);
+
+		return true;
 	}
 	private bool TryAppendSpecialType(StringBuilder builder, Type type)
 	{
@@ -175,6 +199,23 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 
 		builder.Append(')');
 	}
+	private void AppendGenericArguments(StringBuilder builder, Type[] arguments)
+	{
+		builder.Append('{');
+
+		bool hadFirst = false;
+		foreach (Type argument in arguments)
+		{
+			if (hadFirst)
+				builder.Append(',');
+			else
+				hadFirst = true;
+
+			AppendType(builder, argument);
+		}
+
+		builder.Append('}');
+	}
 	private void AppendName(StringBuilder builder, string name)
 	{
 		if (name.Contains('.') is false)
@@ -183,6 +224,11 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 			return;
 		}
 
+		foreach (char ch in name)
+			builder.Append(ch is '.' ? '#' : ch);
+	}
+	private void AppendName(StringBuilder builder, ReadOnlySpan<char> name)
+	{
 		foreach (char ch in name)
 			builder.Append(ch is '.' ? '#' : ch);
 	}
