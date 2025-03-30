@@ -192,6 +192,10 @@ public sealed class DocumentationIdGeneratorTests
 	[DataRow(nameof(SimpleTestType.MethodWithGenericParameter), "(System.Collections.Generic.List{System.Int32})")]
 	[DataRow(nameof(SimpleTestType.MethodWithArray), "(System.Int32[])")]
 	[DataRow(nameof(SimpleTestType.MethodWith2dArray), "(System.Int32[0:,0:])")]
+	[DataRow("op_Addition", "(OwlDomain.Documentation.Tests.SimpleTestType,System.Int32)")]
+	[DataRow("op_CheckedAddition", "(OwlDomain.Documentation.Tests.SimpleTestType,System.Int32)")]
+	[DataRow("op_True", "(OwlDomain.Documentation.Tests.SimpleTestType)")]
+	[DataRow("op_False", "(OwlDomain.Documentation.Tests.SimpleTestType)")]
 	[TestMethod]
 	public void Get_WithMethod_ReturnsExpectedId(string methodName, string expected)
 	{

@@ -1,3 +1,6 @@
+using System.Numerics;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.EventHandlers;
+
 namespace OwlDomain.Documentation.Tests;
 
 /// <summary></summary>
@@ -77,13 +80,24 @@ public sealed class SimpleTestType
 	#endregion
 #pragma warning restore CA1822
 
-
 	#region Operators
 	/// <summary></summary>
 	public static implicit operator int(SimpleTestType _) => 1;
 
 	/// <summary></summary>
 	public static explicit operator byte(SimpleTestType _) => 1;
+
+	/// <summary></summary>
+	public static int operator +(SimpleTestType _1, int _2) => 1;
+
+	/// <summary></summary>
+	public static int operator checked +(SimpleTestType _1, int _2) => 1;
+
+	/// <summary></summary>
+	public static bool operator true(SimpleTestType _) => true;
+
+	/// <summary></summary>
+	public static bool operator false(SimpleTestType _) => false;
 	#endregion
 }
 
