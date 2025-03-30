@@ -13,18 +13,13 @@ on:
   workflow_dispatch: # Allow manual runs
 
 jobs:
-  build_matrix:
+  build:
+    name: Build the entire VS solution.
     runs-on: ubuntu-latest
 
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-
-    strategy:
-      matrix:
-        configuration: [debug, release]
-
-    name: Full ${{ matrix.configuration }} build
 
     steps:
       - name: Install the .NET workflow.
@@ -38,6 +33,10 @@ jobs:
       - name: Ensure playground project exists so that the full solution build doesn't fail.
         run: dotnet new console -o src/local/Playground
 
-      - name: Build the project in with the '${{ matrix.configuration }}' configuration.
+      - name: Build the project with the debug configuration.
         working-directory: src
-        run: dotnet build --configuration ${{ matrix.configuration }}
+        run: dotnet build --configuration debug
+
+      - name: Build the project with the release configuration.
+        working-directory: src
+        run: dotnet build --configuration release
