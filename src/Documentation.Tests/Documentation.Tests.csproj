@@ -1,0 +1,26 @@
+<Project Sdk="MSTest.Sdk/3.6.4">
+
+	<!-- Project -->
+  <PropertyGroup Label="project">
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
+
+		<AssemblyName>OwlDomain.Documentation.Tests</AssemblyName>
+		<RootNamespace>OwlDomain.Documentation.Tests</RootNamespace>
+
+    <UseVSTest>true</UseVSTest>
+  </PropertyGroup>
+
+	<!-- Projects -->
+	<ItemGroup Label="projects">
+    <ProjectReference Include="../Documentation/Documentation.csproj" />
+  </ItemGroup>
+
+	<!-- Packages -->
+	<ItemGroup Label="packages">
+	    <PackageReference Include="OwlDomain.Testing.MSTest" Version="1.1.0" />
+    	<PackageReference Include="OwlDomain.Testing.Assertions" Version="1.3.0" />
+	</ItemGroup>
+
+</Project>
