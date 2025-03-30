@@ -30,6 +30,9 @@ jobs:
       - name: Checkout repository.
         uses: actions/checkout@v4
 
+      - name: Ensure playground project exists so that the solution build doesn't fail.
+        run: dotnet new console -o src/local/Playground
+
       - name: Run the project tests with the debug configuration.
         working-directory: src
         run: dotnet test --configuration debug
