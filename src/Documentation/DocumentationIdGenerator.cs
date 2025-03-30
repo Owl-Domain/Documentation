@@ -16,6 +16,20 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	}
 
 	/// <inheritdoc/>
+	public string Get(MemberInfo member)
+	{
+		return member switch
+		{
+			FieldInfo field => Get(field),
+			PropertyInfo property => Get(property),
+			EventInfo @event => Get(@event),
+			MethodBase method => Get(method),
+
+			_ => throw new NotSupportedException($"The given member type ({member.GetType()}) is not supported."),
+		};
+	}
+
+	/// <inheritdoc/>
 	public string Get(FieldInfo field)
 	{
 		StringBuilder builder = new("F:");

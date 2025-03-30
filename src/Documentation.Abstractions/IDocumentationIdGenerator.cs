@@ -11,6 +11,11 @@ public interface IDocumentationIdGenerator
 	/// <returns>The documentation comment id for the given <paramref name="type"/>.</returns>
 	string Get(Type type);
 
+	/// <summary>Gets a documentation comment id for the given <paramref name="member"/>.</summary>
+	/// <param name="member">The member to get the documentation comment id for.</param>
+	/// <returns>The documentation comment id for the given <paramref name="member"/>.</returns>
+	string Get(MemberInfo member);
+
 	/// <summary>Gets a documentation comment id for the given <paramref name="field"/>.</summary>
 	/// <param name="field">The field to get the documentation comment id for.</param>
 	/// <returns>The documentation comment id for the given <paramref name="field"/>.</returns>
