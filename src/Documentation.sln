@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{C841F5C2-8
 		..\.gitattributes = ..\.gitattributes
 		..\.gitignore = ..\.gitignore
 		..\playground_fix.sh = ..\playground_fix.sh
+		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation.Abstractions", "Documentation.Abstractions\Documentation.Abstractions.csproj", "{41297259-B2B1-436C-B080-21F8EDEBF5C2}"
