@@ -68,6 +68,12 @@ public sealed class SimpleTestType
 
 	/// <summary></summary>
 	public void MethodWithGenericParameter(List<int> _) { }
+
+	/// <summary></summary>
+	public void MethodWithArray(int[] _) { }
+
+	/// <summary></summary>
+	public void MethodWith2dArray(int[,] _) { }
 	#endregion
 #pragma warning restore CA1822
 }

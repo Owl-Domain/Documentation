@@ -124,7 +124,10 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	#region Helpers
 	private void AppendType(StringBuilder builder, Type type)
 	{
-		if (TryAppendConstructedGeneric(builder, type))
+		if (TryAppendConstructedGenericType(builder, type))
+			return;
+
+		if (TryAppendArrayType(builder, type))
 			return;
 
 		if (TryAppendSpecialType(builder, type))
@@ -143,7 +146,7 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 
 		AppendName(builder, type.Name);
 	}
-	private bool TryAppendConstructedGeneric(StringBuilder builder, Type type)
+	private bool TryAppendConstructedGenericType(StringBuilder builder, Type type)
 	{
 		if (type.IsConstructedGenericType is false)
 			return false;
@@ -192,6 +195,43 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 
 		return false;
 	}
+	private bool TryAppendArrayType(StringBuilder builder, Type type)
+	{
+		if (type.IsSZArray)
+		{
+			Type? elementType = type.GetElementType();
+			Debug.Assert(elementType is not null);
+
+			AppendType(builder, elementType);
+			builder.Append("[]");
+
+			return true;
+		}
+
+		if (type.IsArray)
+		{
+			Type? elementType = type.GetElementType();
+			Debug.Assert(elementType is not null);
+
+			AppendType(builder, elementType);
+			builder.Append('[');
+
+			int rank = type.GetArrayRank();
+			for (int i = 0; i < rank; i++)
+			{
+				if (i > 0)
+					builder.Append(',');
+
+				builder.Append("0:");
+			}
+			builder.Append(']');
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void AppendParameter(StringBuilder builder, ParameterInfo parameter)
 	{
 		AppendType(builder, parameter.ParameterType);

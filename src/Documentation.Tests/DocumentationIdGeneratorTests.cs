@@ -181,20 +181,22 @@ public sealed class DocumentationIdGeneratorTests
 	#endregion
 
 	#region Get(MethodInfo) tests
-	[DataRow(nameof(SimpleTestType.OutMethod), "OutMethod(System.Int32@)")]
-	[DataRow(nameof(SimpleTestType.InMethod), "InMethod(System.Int32@)")]
-	[DataRow(nameof(SimpleTestType.RefMethod), "RefMethod(System.Int32@)")]
-	[DataRow(nameof(SimpleTestType.MethodWithParameter), "MethodWithParameter(System.Int32)")]
-	[DataRow(nameof(SimpleTestType.MethodWithPointer), "MethodWithPointer(System.Int32*)")]
-	[DataRow(nameof(SimpleTestType.ParameterlessMethod), "ParameterlessMethod")]
-	[DataRow(nameof(SimpleTestType.MethodWithGenericParameter), "MethodWithGenericParameter(System.Collections.Generic.List{System.Int32})")]
+	[DataRow(nameof(SimpleTestType.OutMethod), "(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.InMethod), "(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.RefMethod), "(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.MethodWithParameter), "(System.Int32)")]
+	[DataRow(nameof(SimpleTestType.MethodWithPointer), "(System.Int32*)")]
+	[DataRow(nameof(SimpleTestType.ParameterlessMethod), "")]
+	[DataRow(nameof(SimpleTestType.MethodWithGenericParameter), "(System.Collections.Generic.List{System.Int32})")]
+	[DataRow(nameof(SimpleTestType.MethodWithArray), "(System.Int32[])")]
+	[DataRow(nameof(SimpleTestType.MethodWith2dArray), "(System.Int32[0:,0:])")]
 	[TestMethod]
 	public void Get_WithMethod_ReturnsExpectedId(string methodName, string expected)
 	{
 		// Arrange
 		Type type = typeof(SimpleTestType);
 		MethodInfo? method = type.GetMethod(methodName);
-		expected = $"M:{type.FullName}.{expected}";
+		expected = $"M:{type.FullName}.{methodName}{expected}";
 
 		DocumentationIdGenerator sut = new();
 
