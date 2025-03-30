@@ -9,7 +9,10 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	/// <inheritdoc/>
 	public string Get(Type type)
 	{
-		throw new NotImplementedException();
+		StringBuilder builder = new("T:");
+		AppendType(builder, type);
+
+		return builder.ToString();
 	}
 
 	/// <inheritdoc/>
@@ -51,6 +54,24 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		// Note(Nightowl): Are errors allowed to contain white space?
 
 		return $"!:{error}";
+	}
+	#endregion
+
+	#region Helpers
+	private void AppendType(StringBuilder builder, Type type)
+	{
+		if (type.DeclaringType is not null)
+		{
+			AppendType(builder, type.DeclaringType);
+			builder.Append('.');
+		}
+		else if (type.Namespace is not null)
+		{
+			builder.Append(type.Namespace);
+			builder.Append('.');
+		}
+
+		builder.Append(type.Name);
 	}
 	#endregion
 }
