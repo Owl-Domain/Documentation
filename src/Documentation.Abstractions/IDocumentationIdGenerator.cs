@@ -34,6 +34,7 @@ public interface IDocumentationIdGenerator
 	/// <summary>Gets a documentation comment id for the given <paramref name="namespace"/>.</summary>
 	/// <param name="namespace">The namespace to get the documentation comment id for.</param>
 	/// <returns>The documentation comment id for the given <paramref name="namespace"/>.</returns>
+	/// <exception cref="ArgumentException">Thrown if the given <paramref name="namespace"/> contains white space characters.</exception>
 	string GetForNamespace(string @namespace);
 
 	/// <summary>Gets a documentation comment id for the given <paramref name="error"/> message.</summary>

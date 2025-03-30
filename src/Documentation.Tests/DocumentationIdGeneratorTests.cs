@@ -72,6 +72,24 @@ public sealed class DocumentationIdGeneratorTests
 		// Assert
 		Assert.That.AreEqual(result, expected);
 	}
+
+	[TestMethod]
+	public void GetForNamespace_WithWhitespace_ThrowsArgumentException()
+	{
+		// Arrange
+		const string value = "name space";
+		const string expectedParameterName = "namespace";
+
+		DocumentationIdGenerator sut = new();
+
+		// Act
+		void Act() => sut.GetForNamespace(value);
+
+		// Assert
+		Assert.That
+			.ThrowsExactException(Act, out ArgumentException exception)
+			.AreEqual(exception.ParamName, expectedParameterName);
+	}
 	#endregion
 
 	#region GetForError tests

@@ -39,13 +39,18 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	/// <inheritdoc/>
 	public string GetForNamespace(string @namespace)
 	{
-		throw new NotImplementedException();
+		if (@namespace.Any(char.IsWhiteSpace))
+			throw new ArgumentException($"The given namespace ({@namespace}) contains whitespace characters.", nameof(@namespace));
+
+		return $"N:{@namespace}";
 	}
 
 	/// <inheritdoc/>
 	public string GetForError(string error)
 	{
-		throw new NotImplementedException();
+		// Note(Nightowl): Are errors allowed to contain white space?
+
+		return $"!:{error}";
 	}
 	#endregion
 }
