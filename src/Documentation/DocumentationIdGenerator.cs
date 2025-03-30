@@ -112,6 +112,9 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 	#region Helpers
 	private void AppendType(StringBuilder builder, Type type)
 	{
+		if (TryAppendSpecialType(builder, type))
+			return;
+
 		if (type.DeclaringType is not null)
 		{
 			AppendType(builder, type.DeclaringType);
@@ -124,6 +127,32 @@ public sealed class DocumentationIdGenerator : IDocumentationIdGenerator
 		}
 
 		AppendName(builder, type.Name);
+	}
+	private bool TryAppendSpecialType(StringBuilder builder, Type type)
+	{
+		if (type.IsByRef)
+		{
+			Type? elementType = type.GetElementType();
+			Debug.Assert(elementType is not null);
+
+			AppendType(builder, elementType);
+			builder.Append('@');
+
+			return true;
+		}
+
+		if (type.IsPointer)
+		{
+			Type? elementType = type.GetElementType();
+			Debug.Assert(elementType is not null);
+
+			AppendType(builder, elementType);
+			builder.Append('*');
+
+			return true;
+		}
+
+		return false;
 	}
 	private void AppendParameter(StringBuilder builder, ParameterInfo parameter)
 	{

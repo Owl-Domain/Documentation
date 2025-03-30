@@ -163,6 +163,34 @@ public sealed class DocumentationIdGeneratorTests
 	}
 	#endregion
 
+	#region Get(MethodInfo) tests
+	[DataRow(nameof(SimpleTestType.OutMethod), "OutMethod(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.InMethod), "InMethod(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.RefMethod), "RefMethod(System.Int32@)")]
+	[DataRow(nameof(SimpleTestType.MethodWithParameter), "MethodWithParameter(System.Int32)")]
+	[DataRow(nameof(SimpleTestType.MethodWithPointer), "MethodWithPointer(System.Int32*)")]
+	[DataRow(nameof(SimpleTestType.ParameterlessMethod), "ParameterlessMethod")]
+	[TestMethod]
+	public void Get_WithMethod_ReturnsExpectedId(string methodName, string expected)
+	{
+		// Arrange
+		Type type = typeof(SimpleTestType);
+		MethodInfo? method = type.GetMethod(methodName);
+		expected = $"M:{type.FullName}.{expected}";
+
+		DocumentationIdGenerator sut = new();
+
+		// Arrange assert
+		Assert.IsConclusiveIf.IsNotNull(method);
+
+		// Act
+		string result = sut.Get(method);
+
+		// Assert
+		Assert.That.AreEqual(result, expected);
+	}
+	#endregion
+
 	#region Get(ConstructorInfo) tests
 	[TestMethod]
 	public void Get_WithParameterlessConstructor_ReturnsExpectedId()

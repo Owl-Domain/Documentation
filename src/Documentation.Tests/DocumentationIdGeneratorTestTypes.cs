@@ -39,4 +39,26 @@ public sealed class SimpleTestType
 	/// <summary></summary>
 	static SimpleTestType() { }
 	#endregion
+
+#pragma warning disable CA1822
+	#region Methods
+	/// <summary></summary>
+	public void OutMethod(out int value) => value = 1;
+
+	/// <summary></summary>
+	public void InMethod(in int Get_WithConstructor_ReturnsExpectedId) { }
+
+	/// <summary></summary>
+	public void RefMethod(ref int _) { }
+
+	/// <summary></summary>
+	public void MethodWithParameter(int _) { }
+
+	/// <summary></summary>
+	public unsafe void MethodWithPointer(int* _) { }
+
+	/// <summary></summary>
+	public void ParameterlessMethod() { }
+	#endregion
+#pragma warning restore CA1822
 }
