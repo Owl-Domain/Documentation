@@ -57,9 +57,11 @@ public sealed class DocumentationIdGeneratorTests
 	[DataRow(typeof(ushort), "T:System.UInt16"), DataRow(typeof(short), "T:System.Int16")]
 	[DataRow(typeof(uint), "T:System.UInt32"), DataRow(typeof(int), "T:System.Int32")]
 	[DataRow(typeof(ulong), "T:System.UInt64"), DataRow(typeof(long), "T:System.Int64")]
-	[DataRow(typeof(float), "T:System.Single"), DataRow(typeof(double), "T:System.Double")]
+	[DataRow(typeof(float), "T:System.Single"), DataRow(typeof(double), "T:System.Double"), DataRow(typeof(decimal), "T:System.Decimal")]
 	[DataRow(typeof(char), "T:System.Char"), DataRow(typeof(string), "T:System.String")]
 	[DataRow(typeof(object), "T:System.Object"), DataRow(typeof(void), "T:System.Void")]
+	[DataRow(typeof(nuint), "T:System.UIntPtr"), DataRow(typeof(nint), "T:System.IntPtr")]
+	[DataRow(typeof(bool), "T:System.Boolean")]
 	[TestMethod]
 	public void Get_WithIntrinsicType_ReturnsExpectedId(Type type, string expected)
 	{
