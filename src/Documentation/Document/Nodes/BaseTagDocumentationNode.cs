@@ -21,28 +21,6 @@ public class TagDocumentationNode : DocumentationNodeCollection, ITagDocumentati
 	/// <param name="tagName">The name of the XML tag.</param>
 	/// <param name="attributes">The raw attributes defined on the tag node.</param>
 	/// <param name="children">The child documentation nodes that make up the tag node.</param>
-	/// <remarks>A node populated through this constructor will not be self closing.</remarks>
-	public TagDocumentationNode(string tagName, IReadOnlyDictionary<string, string> attributes, IReadOnlyList<IDocumentationNode> children) : base(children)
-	{
-		TagName = tagName;
-		Attributes = attributes;
-	}
-
-	/// <summary>Creates a new instance of the <see cref="TagDocumentationNode"/>.</summary>
-	/// <param name="tagName">The name of the XML tag.</param>
-	/// <param name="attributes">The raw attributes defined on the tag node.</param>
-	/// <param name="isSelfClosing">Whether the node is self closing.</param>
-	public TagDocumentationNode(string tagName, IReadOnlyDictionary<string, string> attributes, bool isSelfClosing) : base([])
-	{
-		TagName = tagName;
-		Attributes = attributes;
-		IsSelfClosing = isSelfClosing;
-	}
-
-	/// <summary>Creates a new instance of the <see cref="TagDocumentationNode"/>.</summary>
-	/// <param name="tagName">The name of the XML tag.</param>
-	/// <param name="attributes">The raw attributes defined on the tag node.</param>
-	/// <param name="children">The child documentation nodes that make up the tag node.</param>
 	/// <param name="isSelfClosing">Whether the node is self closing.</param>
 	/// <exception cref="ArgumentException">
 	/// 	Thrown if <paramref name="isSelfClosing"/> is <see langword="true"/>

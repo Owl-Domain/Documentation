@@ -68,8 +68,19 @@ public class DocumentationParser : IDocumentationParser
 	{
 		knownNode = null;
 
-		if (element.Name is "summary" or "remarks" or "inheritdoc" or "param" or "c" or "code" or "example")
-			knownNode = new TagDocumentationNode(element.Name, attributes, children, element.IsEmpty);
+		knownNode = element.Name switch
+		{
+			"summary" => new SummaryTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"remarks" => new RemarksTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"returns" => new ReturnsTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"value" => new ValueTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"para" => new ParagraphTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"c" => new InlineCodeTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"code" => new CodeBlockTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"example" => new ExampleTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+
+			_ => null,
+		};
 
 		return knownNode is not null;
 	}
