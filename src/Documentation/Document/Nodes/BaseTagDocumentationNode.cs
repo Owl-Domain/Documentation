@@ -14,6 +14,24 @@ public class TagDocumentationNode : DocumentationNodeCollection, ITagDocumentati
 
 	/// <inheritdoc/>
 	public IReadOnlyDictionary<string, string> Attributes { get; }
+
+	/// <inheritdoc/>
+	public Uri? Link => Attributes.TryGetValue("href", out string? href) ? new(href) : null;
+
+	/// <inheritdoc/>
+	public string? CodeReference => Attributes.TryGetValue("cref", out string? cref) ? cref : null;
+
+	/// <inheritdoc/>
+	public string? LanguageKeyword => Attributes.TryGetValue("langword", out string? langword) ? langword : null;
+
+	/// <inheritdoc/>
+	public string? NameReference => Attributes.TryGetValue("name", out string? name) ? name : null;
+
+	/// <inheritdoc/>
+	public string? PathReference => Attributes.TryGetValue("path", out string? path) ? path : null;
+
+	/// <inheritdoc/>
+	public string? FileReference => Attributes.TryGetValue("file", out string? file) ? file : null;
 	#endregion
 
 	#region Constructors

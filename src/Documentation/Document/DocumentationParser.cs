@@ -79,6 +79,22 @@ public class DocumentationParser : IDocumentationParser
 			"code" => new CodeBlockTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
 			"example" => new ExampleTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
 
+			"param" => new ParameterTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"paramref" => new ParameterReferenceTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"typeparam" => new TypeParameterTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"typeparamref" => new TypeParameterReferenceTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"exception" => new ExceptionTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"inheritdoc" => new InheritTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"include" => new IncludeTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"see" => new SeeTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"seealso" => new SeeAlsoTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+
+			"list" => new ListTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"listheader" => new ListHeaderTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"item" => new ItemTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"term" => new TermTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"description" => new DescriptionTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+
 			_ => null,
 		};
 
