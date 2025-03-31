@@ -49,23 +49,29 @@ public class DocumentationParser : IDocumentationParser
 		if (node.NodeType is XmlNodeType.Text)
 			return new TextDocumentationNode(node.Value);
 
-		if (node is XmlElement element)
-		{
-			IReadOnlyDictionary<string, string> attributes = ParseAttributes(node);
-			IReadOnlyList<IDocumentationNode> children = ParseChildNodes(node);
+		if (node is not XmlElement element)
+			throw new ArgumentException($"Unknown XML node type ({node.NodeType}).", nameof(node));
 
-			if (element.IsEmpty)
-			{
-				if (children.Count > 0)
-					throw new InvalidOperationException("Empty elements should not have any children.");
+		IReadOnlyDictionary<string, string> attributes = ParseAttributes(node);
+		IReadOnlyList<IDocumentationNode> children = ParseChildNodes(node);
 
-				return new UnknownTagDocumentationNode(node.Name, attributes, true);
-			}
-			else
-				return new UnknownTagDocumentationNode(node.Name, attributes, children);
-		}
+		if (TryParseKnownTagNode(element, attributes, children, out IDocumentationNode? knownNode))
+			return knownNode;
 
-		throw new ArgumentException($"Unknown XML node type ({node.NodeType}).", nameof(node));
+		return new UnknownTagDocumentationNode(node.Name, attributes, children, element.IsEmpty);
+	}
+	private bool TryParseKnownTagNode(
+		XmlElement element,
+		IReadOnlyDictionary<string, string> attributes,
+		IReadOnlyList<IDocumentationNode> children,
+		[NotNullWhen(true)] out IDocumentationNode? knownNode)
+	{
+		knownNode = null;
+
+		if (element.Name is "summary" or "remarks" or "inheritdoc" or "param" or "c" or "code" or "example")
+			knownNode = new TagDocumentationNode(element.Name, attributes, children, element.IsEmpty);
+
+		return knownNode is not null;
 	}
 	private IReadOnlyDictionary<string, string> ParseAttributes(XmlNode node)
 	{
