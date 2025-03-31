@@ -95,6 +95,12 @@ public class DocumentationParser : IDocumentationParser
 			"term" => new TermTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
 			"description" => new DescriptionTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
 
+			"b" => new BoldTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"i" => new ItalicTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"u" => new UnderlineTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"a" => new LinkTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+			"br" => new LineBreakTagDocumentationNode(element.Name, attributes, children, element.IsEmpty),
+
 			_ => null,
 		};
 
