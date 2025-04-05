@@ -12,7 +12,6 @@
 
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Deterministic>true</Deterministic>
-		<DeterministicSourcePaths>true</DeterministicSourcePaths>
 	</PropertyGroup>
 
 	<!-- NuGet package -->
