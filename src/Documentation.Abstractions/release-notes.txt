@@ -1,0 +1,4 @@
+v1.0.1:
+	- Hopefully fully deterministic builds.
+v1.0.0:
+	- Initial release.
