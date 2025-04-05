@@ -1,5 +1,6 @@
 # OwlDomain.Documentation
 
+[<img src="https://img.shields.io/nuget/v/OwlDomain.Documentation?logo=nuget" alt="nuget.org package version">](https://www.nuget.org/packages/OwlDomain.Documentation)
 [![Build](https://github.com/Owl-Domain/Documentation/actions/workflows/build.yml/badge.svg)](https://github.com/Owl-Domain/Documentation/actions/workflows/build.yml)
 [![Test](https://github.com/Owl-Domain/Documentation/actions/workflows/test.yml/badge.svg)](https://github.com/Owl-Domain/Documentation/actions/workflows/test.yml)
 [![Package](https://github.com/Owl-Domain/Documentation/actions/workflows/package.yml/badge.svg)](https://github.com/Owl-Domain/Documentation/actions/workflows/package.yml)
