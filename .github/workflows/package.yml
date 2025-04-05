@@ -43,7 +43,7 @@ jobs:
 
       - name: Create the NuGet packages.
         working-directory: src
-        run: dotnet pack --configuration release --no-build --output package_output
+        run: dotnet pack --configuration release --no-build --output ../package_output
 
         # Easier to just let it build along with all the other packages
       - name: Remove the uncessary Playground project NuGet package
