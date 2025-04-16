@@ -6,6 +6,7 @@ permissions:
 
 on:
   push:
+    branches: master
     paths:
       - '.github/workflows/package.yml' # React to the workflow file itself changing
       - 'src/**' # React to the source files changing
