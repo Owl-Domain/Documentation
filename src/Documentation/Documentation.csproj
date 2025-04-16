@@ -25,7 +25,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<Authors>OwlDomain</Authors>
-		<Copyright>Copyright (c) OwlDomain 2025</Copyright>
+		<Copyright>Copyright (c) OwlDomain $([System.DateTime]::UtcNow.Year)</Copyright>
 
 		<ProjectUrl>https://www.github.com/Owl-Domain/Documentation</ProjectUrl>
 		<RepositoryUrl>https://github.com/Owl-Domain/Documentation.git</RepositoryUrl>
