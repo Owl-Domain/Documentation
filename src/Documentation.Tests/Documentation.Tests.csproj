@@ -15,12 +15,12 @@
     <UseVSTest>true</UseVSTest>
   </PropertyGroup>
 
-	<!-- Projects -->
+	<!-- Project references -->
 	<ItemGroup Label="projects">
     <ProjectReference Include="../Documentation/Documentation.csproj" />
   </ItemGroup>
 
-	<!-- Packages -->
+	<!-- Package references -->
 	<ItemGroup Label="packages">
 	    <PackageReference Include="OwlDomain.Testing.MSTest" Version="1.1.0" />
     	<PackageReference Include="OwlDomain.Testing.Assertions" Version="1.3.0" />
