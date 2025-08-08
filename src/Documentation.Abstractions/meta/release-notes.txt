@@ -1,8 +1,8 @@
+latest []:
+	- Package organisation.
+
 v1.0.3 [16-04-2025]:
 	- Fixed license acceptance requirement.
-
-v1.0.2:
-	- Fixed the NuGet package description.
 
 v1.0.1:
 	- Hopefully fully deterministic builds.
