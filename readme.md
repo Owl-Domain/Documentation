@@ -19,7 +19,7 @@ In a C# project (a .csproj file) that would look like this:
 
 ```xml
 <ItemGroup>
-	<PackageReference Include="OwlDomain.Documentation" Version="1.0.3" />
+	<PackageReference Include="OwlDomain.Documentation" Version="1.0.4" />
 </ItemGroup>
 ```
 
